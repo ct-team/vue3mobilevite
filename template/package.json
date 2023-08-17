@@ -10,7 +10,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "build:online": "vite build --mode production && gulp move --env production",
+    "build:online": "vite build --mode production  && gulp move --env production",
     "build:pre": "vite build --mode pre && gulp move --env pre",
     "build:test": "vite build --mode ctest && gulp move --env ctest",
     "build:dev": "vite build --mode dev && gulp move --env dev",
