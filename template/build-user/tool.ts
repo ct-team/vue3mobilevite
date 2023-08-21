@@ -1,5 +1,5 @@
 const buildConfig = require('./config');
-import { globSync } from 'glob';
+const glob = require('glob');
 
 export type IEnv = 'stable' | 'dev' | 'ctest' | 'pre' | 'production' | 'development';
 
@@ -21,8 +21,9 @@ interface IPages {
   [key: string]: string;
 }
 const getMulu = function (filePath: string) {
-  const filename1 = filePath.substring(0, filePath.lastIndexOf('\\'));
-  const filename2 = filename1.substring(filename1.lastIndexOf('\\') + 1);
+  const newPath = filePath.replace(/\\/g, '/');
+  const filename1 = newPath.substring(0, newPath.lastIndexOf('/'));
+  const filename2 = filename1.substring(filename1.lastIndexOf('/') + 1);
   return filename2;
 };
 // 多页配置
@@ -31,7 +32,7 @@ export const getPages = () => {
     //index: 'src/pages/index.html'
   };
   try {
-    const indexFile = globSync('src/pages/index.html');
+    const indexFile = glob.globSync('src/pages/index.html');
     if (indexFile.length > 0) {
       pages['index'] = 'src/pages/index.html';
     }
@@ -39,8 +40,7 @@ export const getPages = () => {
     console.log(e);
   }
   try {
-    const entryFiles = globSync('src/pages/*/index.html');
-
+    const entryFiles = glob.globSync('src/pages/*/index.html');
     entryFiles.forEach((filePath: string) => {
       const filename = getMulu(filePath);
       pages[filename] = filePath.replace(/\\/g, '/');
